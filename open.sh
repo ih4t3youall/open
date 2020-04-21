@@ -25,6 +25,18 @@ if [ $flag == 0 ]; then
 fi
 
 
+if [ $flag == 0 ]; then
+		input="/home/juan.martin.lequerica/.scripts/open/allVideoFilesLowercase.txt"
+		while IFS= read -r line
+			do
+				if [ $extension = "$line" ];then
+					vlc $1
+				fi
+		done < "$input"
+	  	flag=1
+fi
+
+
 if [ $extension = "html" ]; then
   opera "$1"
   flag=1
