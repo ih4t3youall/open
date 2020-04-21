@@ -5,6 +5,12 @@ extension="${filename##*.}"
 filename="${filename%.*}"
 flag=0
 
+if [ $1 == "." ]; then
+  nautilus .
+  flag=1
+fi
+
+
 if [ $extension = "sh" ]; then
   chmod +x "$1"
   ./"$1"
