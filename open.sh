@@ -18,7 +18,7 @@ if [ $extension == "sh" ]; then
 fi
 
 if [ $flag == 0 ]; then
-	if [ $extension == "jpg" ] || [ $extension == "jpeg" ] || [$extension == "png"] || [$extension == "bmp"]; then
+	if [ $extension == "jpg" ] || [ $extension == "jpeg" ] || [ $extension == "png" ] || [ $extension == "bmp" ]; then
 	  feh "$1"
 	  flag=1
 	fi
@@ -37,18 +37,13 @@ if [ $flag == 0 ]; then
 fi
 
 
-if [ $extension == "html" ]; then
+if [ $extension == "html" ] || [ $extension == "pdf" ]; then
   opera "$1"
   flag=1
 fi
 
 if [ $extension == "txt" ] || [ $extension == "java" ] || [ $extension == "feature" ]; then
-  geany "$1"
-  flag=1
-fi
-
-if [ $extension == "pdf" ]; then
-  opera "$1"
+  atom "$1"
   flag=1
 fi
 
