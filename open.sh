@@ -52,6 +52,10 @@ if [ $flag == 0 ] && [ $extension == "feature" ]; then
   flag=1
 fi
 
+if [ $flag == 0 ] && [ $extension == "docx" ]; then
+  libreoffice "$1"
+fi
+
 grep -q "\x00" $1 && value="Binary" || value="Text"
 
 if [ $flag == 0 ] && [ $value == "Text" ]; then
