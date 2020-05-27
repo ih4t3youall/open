@@ -38,7 +38,8 @@ fi
 
 
 if [ $extension == "html" ] || [ $extension == "pdf" ]; then
-  opera "$1"
+  #opera "$1"
+  gio open "$1"
   flag=1
 fi
 
@@ -54,6 +55,12 @@ fi
 
 if [ $flag == 0 ] && [ $extension == "docx" ]; then
   libreoffice "$1"
+  flag=1
+fi
+
+if [ $flag == 0 ] && [ $extension  == "py" ]; then
+  python3 "$1"
+  flag=1
 fi
 
 grep -q "\x00" $1 && value="Binary" || value="Text"
