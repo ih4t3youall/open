@@ -13,6 +13,10 @@ text=("txt" "java" "feature" )
 images=("jpg" "jpeg" "png" "bmp")
 video=("3gp" "asf" "avi" "flv" "mkv" "midi" "mp4" "ogg" "ogm" "wav" "mpeg" -2"ps" "ts" "pva" "mp3" "aiff" "mxf" "vob" "rm" "vcd" "svcd" "dvb" "heif" "avif" "aac" "ac3" "alac" "amr" "dts" "xm" "flac" "it" "mp3" "qcp" "qdm2" "tta" "wma" "dvb" "dvb" "dvb" "dvb" "atsc" "mpeg" "rtp" "rtsp" "3gpp" "pss" "mpeg" "mpl2" "ogm" "dv" "mpeg" "avc" "h" "mpeg" "hevc" "av1" "huffyuv" "mjpeg" "mpeg" "mpeg" "mpeg" "vc" "vp5" "vp6" "vp8" "vp9" "dnxhd" "wmv" "mov" "MOV")
 
+if [ $# -eq 0 ]; then
+    echo "No arguments supplied"
+    return
+fi
 
 if [[ -d $1 ]]; then
     echo "$1 is a directory"
@@ -83,3 +87,5 @@ if [ "$flag" == 0 ] && [ "$value" == "Text" ]; then
   flag=0
   return
 fi
+
+return
