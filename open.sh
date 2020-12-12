@@ -1,71 +1,85 @@
-#/bin/bash
+#!/bin/bash
+#open2
 
 filename=$(basename -- "$1")
 extension="${filename##*.}"
 filename="${filename%.*}"
-flag=0
 
-if [ $1 == "." ]; then
+vim=0
+vlc=0
+
+office=("odt" "docx" "doc" "ods" "cvs")
+text=("txt" "java" "feature" )
+images=("jpg" "jpeg" "png" "bmp")
+video=("3gp" "asf" "avi" "flv" "mkv" "midi" "mp4" "ogg" "ogm" "wav" "mpeg" -2"ps" "ts" "pva" "mp3" "aiff" "mxf" "vob" "rm" "vcd" "svcd" "dvb" "heif" "avif" "aac" "ac3" "alac" "amr" "dts" "xm" "flac" "it" "mp3" "qcp" "qdm2" "tta" "wma" "dvb" "dvb" "dvb" "dvb" "atsc" "mpeg" "rtp" "rtsp" "3gpp" "pss" "mpeg" "mpl2" "ogm" "dv" "mpeg" "avc" "h" "mpeg" "hevc" "av1" "huffyuv" "mjpeg" "mpeg" "mpeg" "mpeg" "vc" "vp5" "vp6" "vp8" "vp9" "dnxhd" "wmv" "mov" "MOV")
+
+
+if [[ -d $1 ]]; then
+    echo "$1 is a directory"
+    nautilus "$1"
+    return
+fi
+
+if [ "$1" == '.' ]; then
   nautilus .
-  flag=1
+  return
 fi
 
 
-if [ $extension == "sh" ]; then
+if [ "$extension" == "sh" ]; then
   chmod +x "$1"
   ./"$1"
-  flag=1
+  return
 fi
 
-if [ $flag == 0 ]; then
-	if [ $extension == "jpg" ] || [ $extension == "jpeg" ] || [ $extension == "png" ] || [ $extension == "bmp" ]; then
-	  feh "$1"
-	  flag=1
-	fi
+if [ "$extension" == "py" ]; then
+ python3 "$1" 
+ return
 fi
 
-
-if [ $flag == 0 ]; then
-		input="/home/juan.martin.lequerica/.scripts/open/allVideoFilesLowercase.txt"
-		while IFS= read -r line
-			do
-				if [ $extension == "$line" ];then
-					vlc "$1"
-	  				flag=1
-				fi
-		done < "$input"
+if [ "$extension" == "pdf" ]; then
+    gio open "$1"
+    return
 fi
 
-
-if [ $extension == "html" ] || [ $extension == "pdf" ]; then
-  #opera "$1"
-  gio open "$1"
-  flag=1
-fi
-
-if [ $extension == "txt" ] || [ $extension == "java" ] || [ $extension == "feature" ]; then
-  atom "$1"
-  flag=1
-fi
-
-if [ $flag == 0 ] && [ $extension == "feature" ]; then
-  vim "$1"
-  flag=1
-fi
-
-if [ $flag == 0 ] && [ $extension == "docx" ]; then
-  libreoffice "$1"
-  flag=1
-fi
-
-if [ $flag == 0 ] && [ $extension  == "py" ]; then
+if [ "$extension"  == "py" ]; then
   python3 "$1"
-  flag=1
+  return
 fi
+
+for i in "${office[@]}"; 
+do 
+  if [ "$extension" == "$i" ]; then
+    libreoffice "$1"
+  fi
+done
+
+
+for i in "${text[@]}"; 
+do 
+  if [ "$extension" == "$i" ]; then
+    featherpad "$1"
+  fi
+done
+
+for i in "${images[@]}"; 
+do 
+  if [ "$extension" == "$i" ]; then
+    feh "$1"
+  fi
+done
+
+for i in "${video[@]}"; 
+do 
+  if [ "$extension" == "$i" ]; then
+    vlc "$1"
+  fi
+done
 
 grep -q "\x00" $1 && value="Binary" || value="Text"
 
-if [ $flag == 0 ] && [ $value == "Text" ]; then
+if [ "$flag" == 0 ] && [ "$value" == "Text" ]; then
   vim "$1"
   flag=0
+  return
 fi

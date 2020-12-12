@@ -22,19 +22,34 @@ fi
 
 if [ "$1" == '.' ]; then
   nautilus .
+  return
+fi
+
+
+if [ "$extension" == "sh" ]; then
+  chmod +x "$1"
+  ./"$1"
+  return
+fi
+
+if [ "$extension" == "py" ]; then
+ python3 "$1" 
+ return
 fi
 
 if [ "$extension" == "pdf" ]; then
     gio open "$1"
+    return
 fi
 
 if [ "$extension"  == "py" ]; then
   python3 "$1"
+  return
 fi
 
 for i in "${office[@]}"; 
 do 
-  if [ $extension == $i ]; then
+  if [ "$extension" == "$i" ]; then
     libreoffice "$1"
   fi
 done
@@ -42,21 +57,21 @@ done
 
 for i in "${text[@]}"; 
 do 
-  if [ $extension == $i ]; then
+  if [ "$extension" == "$i" ]; then
     featherpad "$1"
   fi
 done
 
 for i in "${images[@]}"; 
 do 
-  if [ $extension == $i ]; then
+  if [ "$extension" == "$i" ]; then
     feh "$1"
   fi
 done
 
 for i in "${video[@]}"; 
 do 
-  if [ $extension == $i ]; then
+  if [ "$extension" == "$i" ]; then
     vlc "$1"
   fi
 done
@@ -66,4 +81,5 @@ grep -q "\x00" $1 && value="Binary" || value="Text"
 if [ "$flag" == 0 ] && [ "$value" == "Text" ]; then
   vim "$1"
   flag=0
+  return
 fi
