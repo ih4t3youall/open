@@ -51,6 +51,11 @@ if [ "$extension"  == "py" ]; then
   return
 fi
 
+if [ "$extension" == "deb" ]; then
+  sudo dpkg -i "$1"
+  return
+fi
+
 for i in "${office[@]}"; 
 do 
   if [ "$extension" == "$i" ]; then
