@@ -56,6 +56,11 @@ if [ "$extension" == "deb" ]; then
   return
 fi
 
+if [ "$extension" == "jar" ]; then
+  java -jar "$1"
+  return
+fi
+
 for i in "${office[@]}"; 
 do 
   if [ "$extension" == "$i" ]; then
